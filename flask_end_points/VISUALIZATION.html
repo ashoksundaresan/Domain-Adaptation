@@ -1,0 +1,31 @@
+<html>
+    <body>
+        <div id="divActivites" name="divActivites" style="border:thin">
+        <form action = "http://localhost:5000/set_plot_param" method = "post">
+            <p>Visualization Data File Name: <input type = "text" value= '/Users/karthikkappaganthu/Documents/online_learning/demo_testing_data/domain_adapt_output_files/visualization_data_.csv' name = "filename" /></p>
+            
+            <p>X:<input type = "text" value= 'embeds_tsne_0' name = "x_col" /></p>
+            
+            <p>Y:<input type = "text" value='embeds_tsne_0' name = "y_col" /></p>
+            
+            <p>Source or Target Data Flag:<input type = "text" value='in_source_data_flag' name = "group1_col" /></p>
+            
+            <p>True Label:<input type = "text" value='true_label' name = "group2_col" /></p>
+            
+            <p>Prediction Column:<input type = "text" value='dl_pred' name = "group3_col" /></p>
+            
+            <p>Maunal Lable Suggestions:<input type = "text" value='dl_low_prob_samples' name = "show_only_col" /></p>
+
+            
+            
+            <p><input type = "submit" value = "submit" /></p>
+        </form>
+        
+        <form action = "http://localhost:5000/show_plot" method = "post">
+            <p><input type = "submit" value = "Show Plot" /></p>
+        </form>
+    </div>
+        
+        
+    </body>
+</html>
