@@ -104,11 +104,13 @@ class Load_trainer:
         infer = Inference(deploy_inputs, params=infer_params)
         data = pd.read_csv(data_file, header=None, sep=' ')
 
+
+
         pred_class = [ ]
         pred_prob = [ ]
         representations=[]
         for idx2, file in enumerate(data[0]):
-            print('Running Infrence on {0} ({1} or {2}) with model {3}'.format(data_file.split('/')[-1], idx2, len(data[1]),self.dir_strc.main.split('/')[-1]))
+            print('Running Infrence on {0} ({1} or {2}) with model {3}'.format(data_file.split('/')[-1], idx2, len(data[0]),self.dir_strc.main.split('/')[-1]))
             img = cv2.imread(file)
             if layer:
                 output,reps=infer.predict(img,layer=layer)
