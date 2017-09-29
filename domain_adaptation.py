@@ -13,29 +13,29 @@ import cv2
 class Domain_adaptation():
     def __init__(self,source_files,source_labels,target_files,base_model_files,params,name_prefix,serving_path,target_labels=[]):
         self.source_files=source_files
-        print(source_files)
-        # self.target_files=target_files
-        # self.source_labels = source_labels
-        # if not target_labels:
-        #     target_labels=[-100]*len(target_files)
-        # self.target_labels = target_labels
-        #
-        # self.name_prefix=name_prefix
-        # self.base_model_files=base_model_files
-        #
-        # self.params=params
-        # if 'source_test_train_split_frac' not in params.keys():
-        #     self.source_test_train_split_frac=.2
-        #
-        # if 'target_test_train_split_frac' not in params.keys():
-        #     self.target_test_train_split_frac=.2
-        #
-        # self.serving_path=serving_path
-        #
-        # if 'mix_pct' not in self.params.keys():
-        #     self.mix_pct=[(0,99),(10,99)]
-        # else:
-        #     self.mix_pct=self.params['mix_pct']
+
+        self.target_files=target_files
+        self.source_labels = source_labels
+        if not target_labels:
+            target_labels=[-100]*len(target_files)
+        self.target_labels = target_labels
+
+        self.name_prefix=name_prefix
+        self.base_model_files=base_model_files
+
+        self.params=params
+        if 'source_test_train_split_frac' not in params.keys():
+            self.source_test_train_split_frac=.2
+
+        if 'target_test_train_split_frac' not in params.keys():
+            self.target_test_train_split_frac=.2
+
+        self.serving_path=serving_path
+
+        if 'mix_pct' not in self.params.keys():
+            self.mix_pct=[(0,99),(10,99)]
+        else:
+            self.mix_pct=self.params['mix_pct']
 
     def split_test_train(self):
         # Generate train, val, test data
