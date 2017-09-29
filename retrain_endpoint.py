@@ -13,7 +13,7 @@ def retain_data():
     else:
         data_dir = ''
         compute_tsne_flag = ''
-
+    data_dir=''
     if data_dir == '':
         data_dir = '../domain_adaptation_demo_data'
         print('Using data in {0}'.format(data_dir))
