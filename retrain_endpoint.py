@@ -4,15 +4,15 @@ import pandas as pd
 from flask import Flask,request
 import os
 
-app = Flask(__name__)
-@app.route('/embed_space_learn',methods=['POST','GET'])
+# app = Flask(__name__)
+# @app.route('/embed_space_learn',methods=['POST','GET'])
 def retain_data():
-    if request.method == 'POST':
-        data_dir = request.form['data_dir']
-        compute_tsne_flag = request.form['compute_tsne_flag']
-    else:
-        data_dir = ''
-        compute_tsne_flag = ''
+    # if request.method == 'POST':
+    #     data_dir = request.form['data_dir']
+    #     compute_tsne_flag = request.form['compute_tsne_flag']
+    # else:
+    #     data_dir = ''
+    #     compute_tsne_flag = ''
     data_dir=''
     if data_dir == '':
         data_dir = '../domain_adaptation_demo_data'
@@ -43,7 +43,7 @@ def retain_data():
               'prediction_key': 'prob'}
 
     name_prefix = 'demo_domain_adapt/'
-    serving_path = '/home/ubuntu/online_learning/'
+    serving_path = data_dir
 
     da = domain_adaptation.Domain_adaptation(source_files, source_labels, target_files, target_labels, \
                                              base_model_files, params, name_prefix, serving_path)
