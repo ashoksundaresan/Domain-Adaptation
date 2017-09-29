@@ -105,7 +105,7 @@ class Load_trainer:
         data = pd.read_csv(data_file, header=None, sep=' ')
 
         print('---------------------------------')
-        print(data[0][])
+        print(data[0][0])
         print('---------------------------------')
         # pred_class = [ ]
         # pred_prob = [ ]
