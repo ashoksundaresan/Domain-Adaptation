@@ -5,14 +5,18 @@ from include.infer_from_trainer import Load_trainer
 # app = Flask(__name__)
 # @app.route('/embed_space_learn',methods=['POST','GET'])
 def compute_embed_space():
-    if request.method == 'POST':
-        data_dir = request.form['data_dir']
-        trainer_path=request.form['trainer_path']
-        run_source=request.form['run_source']
-    else:
-        data_dir=''
-        trainer_path =''
-        run_source=''
+    # if request.method == 'POST':
+    #     data_dir = request.form['data_dir']
+    #     trainer_path=request.form['trainer_path']
+    #     run_source=request.form['run_source']
+    # else:
+    #     data_dir=''
+    #     trainer_path =''
+    #     run_source=''
+
+    data_dir = ''
+    trainer_path =''
+    run_source=''
     if data_dir == '':
         data_dir = '../domain_adaptation_demo_data'
         print('Using data in {0}'.format(data_dir))
