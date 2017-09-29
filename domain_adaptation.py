@@ -92,7 +92,7 @@ class Domain_adaptation():
             modify_arch_proto_data_paths(base_arch_path, mean_file_path, source_paths, arch_train_proto_path)
             modify_solver_net_path(base_solver_path,arch_train_proto_path,solver_proto_path)
             if 'deploy_proto' in self.base_model_files.keys():
-                os.system('cp '+ base_model_files['deploy_proto']+' '+ arch_deploy_proto_path)
+                os.system('cp '+ self.base_model_files['deploy_proto']+' '+ arch_deploy_proto_path)
 
 
     def train_transfer_learning(self,solver_method='pycaffe'):
