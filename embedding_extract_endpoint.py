@@ -10,6 +10,7 @@ def compute_embed_space():
     #     data_dir = request.form['data_dir']
     #     trainer_path=request.form['trainer_path']
     #     run_source=request.form['run_source']
+    #     training_data_file = request.form['training_data_file']
     # else:
     #     data_dir=''
     #     trainer_path =''
@@ -17,7 +18,7 @@ def compute_embed_space():
 
     data_dir = ''
     trainer_path = ''
-    run_source = 'False'
+    run_source = 'True'
     training_data_file = '/home/ubuntu/domain_adaptation_demo_data/target_data_dir/target_data.csv'
 
     if data_dir == '':
