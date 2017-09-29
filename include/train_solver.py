@@ -1,11 +1,12 @@
 import sys
-# caffe_root = '/home/karthik/caffe'
-# sys.path.insert(0,caffe_root+'python')
-# import caffe
 import numpy as np
 import logging
 import time
 import os
+caffe_root=os.environ["CAFFE_ROOT"]
+sys.path.insert(0, caffe_root + 'python')
+import caffe
+
 class Train_solver:
     def __init__(self,gpu_id=-1,run_tag=[],convg_param=[],caffe_root=''):
         if not caffe_root:
