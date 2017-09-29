@@ -134,7 +134,7 @@ class Load_trainer:
         else:
             cnf_matrix_array=None
             data['true_label']=''
-        data_2_save=data[[0,'pred_class','pred_prob','true_label']]
+        data_2_save=data[[0,'true_label','pred_class','pred_prob']]
         if save_data_flag:
             preds_save_file_name=self.dir_strc.analysis_results_files+'/'+data_file.split('/')[-1]+'_predictions'+save_data_suffix
             data_2_save.to_csv(preds_save_file_name,sep=',',index=None,header=['image_name','true_label','dl_pred','dl_prob'])

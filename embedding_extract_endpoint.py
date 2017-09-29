@@ -18,7 +18,7 @@ def compute_embed_space():
 
     data_dir = ''
     trainer_path = ''
-    run_source = 'True'
+    run_source = ''
     training_data_file = '/home/ubuntu/domain_adaptation_demo_data/target_data_dir/target_data.csv'
 
     if data_dir == '':
@@ -41,10 +41,15 @@ def compute_embed_space():
         source_pred, source_cnf_matrix_array = trainer.get_performance(source_data_file, params['crop_size'],
                                                                            params['prediction_key'], labels_col=[],
                                                                            layer='conv10', save_data_suffix='_updated')
+        os.system('mkdir data_dir/embeddings_out/updated')
+        os.system('cp '+trainer.dir_strc.analysis_results_files+'/source_test_txt_data_predictions_updated'+' data_dir/embeddings_out/updated/source_data.csv')
+        os.system('cp ' + trainer.dir_strc.analysis_results_files + '/source_test_txt_data_embeds_source.npy' + ' data_dir/embeddings_out/updated/source_data_embeds.npy')
+
     target_pred, target_cnf_matrix_array = trainer.get_performance(training_data_file, params['crop_size'],
                                                                    params['prediction_key'], labels_col=[],
                                                                    layer='conv10', save_data_suffix='_updated')
-
+    os.system('cp ' + trainer.dir_strc.analysis_results_files + '/target_data.csv_predictions_updated' + ' data_dir/embeddings_out/updated/target_data.csv')
+    os.system('cp ' + trainer.dir_strc.analysis_results_files + '/target_test_txt_data_embeds_source.npy' + ' data_dir/embeddings_out/updated/target_data_embeds.npy')
 
 
 if __name__=="__main__":
