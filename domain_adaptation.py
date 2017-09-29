@@ -113,7 +113,7 @@ class Domain_adaptation():
             else:
                 weights_file=final_weights
             if solver_method=='pycaffe':
-                slvr_perf_vec, final_weights, weights_save_dir=trainer.train_solver(solver_proto,niter=20000,weights_file=weights_file,perf_layers=perf_layers,display_interval=100,weights_save_interval=500)
+                slvr_perf_vec, final_weights, weights_save_dir=trainer.train_solver(solver_proto,niter=20000,weights_file=weights_file,perf_layers=perf_layers,display_interval=100,weights_save_interval=2000)
             else:
                 # RUn with caffe....not yet tested
                 if 'caffe_root' in self.params.keys():
