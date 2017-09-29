@@ -104,51 +104,51 @@ class Load_trainer:
         infer = Inference(deploy_inputs, params=infer_params)
         data = pd.read_csv(data_file, header=None, sep=' ')
 
-        print('---------------------------------')
-        print(data[0][0])
-        print('---------------------------------')
-        # pred_class = [ ]
-        # pred_prob = [ ]
-        # representations=[]
-        # for idx2, file in enumerate(data[0]):
-        #     print('Running Infrence on {0} ({1} or {2}) with model {3}'.format(data_file.split('/')[-1], idx2, len(data[0]),self.dir_strc.main.split('/')[-1]))
-        #     img = cv2.imread(file)
-        #     if layer:
-        #         output,reps=infer.predict(img,layer=layer)
-        #         representations.append(reps[0])
-        #     else:
-        #         output = infer.predict(img)
-        #     pred_class.append(output[prediction_key][0].argmax())
-        #     pred_prob.append(output[prediction_key][0].max())
-        #
-        #
-        #
-        # data['pred_class']=pred_class
-        # data['pred_prob']=pred_prob
-        #
-        #
-        # if labels_col:
-        #     targets=data[labels_col]
-        #     cnf_matrix, cnf_matrix_pct = compute_cnf_matrix(targets, data['pred_class'])
-        #     cnf_matrix_array = np.vstack([cnf_matrix, cnf_matrix_pct])
-        # else:
-        #     cnf_matrix_array=None
-        #     data['true_label']=''
-        # data_2_save=data[[0,'pred_class','pred_prob','true_label']]
-        # if save_data_flag:
-        #     preds_save_file_name=self.dir_strc.analysis_results_files+'/'+data_file.split('/')[-1]+'_predictions'+save_data_suffix
-        #     data_2_save.to_csv(preds_save_file_name,sep=',',index=None,header=['image_name','true_label','dl_pred','dl_prob'])
-        #     print('Predictions saved to {0}'.format(preds_save_file_name))
-        #     if labels_col:
-        #         cnf_save_file_name = self.dir_strc.analysis_results_files+'/'+data_file.split('/')[-1] + '_cnf_matrix'+save_data_suffix
-        #         np.savetxt(cnf_save_file_name, cnf_matrix_array, '%f')
-        #         print('Confusion saved to {0}'.format(cnf_save_file_name))
-        #     if layer:
-        #         embeds_save_file_name = self.dir_strc.analysis_results_files + '/' + data_file.split('/')[
-        #             -1] + '_embeds'+save_data_suffix
-        #         np.save(embeds_save_file_name,representations)
-        #
-        # return data_2_save,cnf_matrix_array
+        # print('---------------------------------')
+        # print(data[0][0])
+        # print('---------------------------------')
+        pred_class = [ ]
+        pred_prob = [ ]
+        representations=[]
+        for idx2, file in enumerate(data[0]):
+            print('Running Infrence on {0} ({1} or {2}) with model {3}'.format(data_file.split('/')[-1], idx2, len(data[0]),self.dir_strc.main.split('/')[-1]))
+            img = cv2.imread(file)
+            if layer:
+                output,reps=infer.predict(img,layer=layer)
+                representations.append(reps[0])
+            else:
+                output = infer.predict(img)
+            pred_class.append(output[prediction_key][0].argmax())
+            pred_prob.append(output[prediction_key][0].max())
+
+
+
+        data['pred_class']=pred_class
+        data['pred_prob']=pred_prob
+
+
+        if labels_col:
+            targets=data[labels_col]
+            cnf_matrix, cnf_matrix_pct = compute_cnf_matrix(targets, data['pred_class'])
+            cnf_matrix_array = np.vstack([cnf_matrix, cnf_matrix_pct])
+        else:
+            cnf_matrix_array=None
+            data['true_label']=''
+        data_2_save=data[[0,'pred_class','pred_prob','true_label']]
+        if save_data_flag:
+            preds_save_file_name=self.dir_strc.analysis_results_files+'/'+data_file.split('/')[-1]+'_predictions'+save_data_suffix
+            data_2_save.to_csv(preds_save_file_name,sep=',',index=None,header=['image_name','true_label','dl_pred','dl_prob'])
+            print('Predictions saved to {0}'.format(preds_save_file_name))
+            if labels_col:
+                cnf_save_file_name = self.dir_strc.analysis_results_files+'/'+data_file.split('/')[-1] + '_cnf_matrix'+save_data_suffix
+                np.savetxt(cnf_save_file_name, cnf_matrix_array, '%f')
+                print('Confusion saved to {0}'.format(cnf_save_file_name))
+            if layer:
+                embeds_save_file_name = self.dir_strc.analysis_results_files + '/' + data_file.split('/')[
+                    -1] + '_embeds'+save_data_suffix
+                np.save(embeds_save_file_name,representations)
+
+        return data_2_save,cnf_matrix_array
 
 if __name__=='__main__':
 
