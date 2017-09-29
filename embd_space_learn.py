@@ -9,7 +9,7 @@ from include import samples_to_label
 from sklearn.decomposition import PCA
 import os
 class Embeds_classify:
-    def __init__(self,source_embds_file,target_embds_file,source_data_txt_file,target_data_txt_file,embds_param={'type':'convs','n_convs':2,'standardize':False},true_labels_col='1',index_col='',sep=',',source_test_frac=.2,target_test_frac=.2,serving_dir='',inter_save=True,dl_pred_key='dl_pred'):
+    def __init__(self,source_embds_file,target_embds_file,source_data_txt_file,target_data_txt_file,embds_param={'type':'convs','n_convs':2,'standardize':False},true_labels_col='1',index_col='',sep=',',source_test_frac=.2,target_test_frac=.2,serving_dir='',inter_save=True,dl_pred_key='dl_pred',save_suffix=''):
         # Load data/prediction files
         if index_col:
             self.source_data=pd.read_csv(source_data_txt_file,sep=sep,index_col=index_col)
@@ -80,13 +80,14 @@ class Embeds_classify:
 
         # Save data for visualization
         self.inter_save=inter_save
+        self.save_suffix=save_suffix
         if not serving_dir:
             os.system('mkdir temp')
             serving_dir='temp/'
         self.serving_dir=serving_dir
 
         if self.inter_save:
-            self.save_perforamance(self.serving_dir)
+            self.save_perforamance(self.serving_dir,suffix=self.save_suffix)
 
     def set_test_train_data(self,source_test_mask=[],target_test_mask=[],source_test_frac=.2,target_test_frac=.2):
         if not source_test_mask:
@@ -202,7 +203,7 @@ class Embeds_classify:
             self.embds_space_performance[key_prefix + '_target_test_cnf_matrix'] = target_test_cnf_mats
 
         if self.inter_save:
-            self.save_perforamance(self.serving_dir)
+            self.save_perforamance(self.serving_dir,suffix=self.save_suffix)
         return 'Success'
 
     def dim_red_autoencode(self,encode_dims=[128,64]):
@@ -236,7 +237,7 @@ class Embeds_classify:
 
         if self.inter_save:
             print('Saving TSNE for visualization')
-            self.save_perforamance(self.serving_dir)
+            self.save_perforamance(self.serving_dir,suffix=self.save_suffix)
 
         print('-----------------------------------------------------------------------')
 
@@ -263,8 +264,8 @@ class Embeds_classify:
             self.low_dim_feat_cols['pca'].append(train_feat_space+'_pca_'+str(idx))
 
         if self.inter_save:
-            print('Saving TSNE for visualization')
-            self.save_perforamance(self.serving_dir)
+            print('Saving PCA for visualization')
+            self.save_perforamance(self.serving_dir,suffix=self.save_suffix)
 
     def source_to_target_label_prop(self,train_feat_space='embeds',kernel_param={'type':'rbf','gamma':20}):
         print('-----------------------------------------------------------------------')
@@ -303,7 +304,7 @@ class Embeds_classify:
         # self.embds_space_classifiers.append(train_feat_space+'Space_prop_pred')
         if self.inter_save:
             print('Saving propagated labels')
-            self.save_perforamance(self.serving_dir)
+            self.save_perforamance(self.serving_dir,suffix=self.save_suffix)
 
         print('Completed source to target label propagation in {0} space').format(train_feat_space)
         print('-----------------------------------------------------------------------')
@@ -325,7 +326,7 @@ class Embeds_classify:
 
         self.embds_space_classifiers.append('voting_pred')
         if self.inter_save:
-            self.save_perforamance(self.serving_dir)
+            self.save_perforamance(self.serving_dir,suffix=self.save_suffix)
 
     def save_perforamance(self,save_dir,class_key='all',print_flag=True,suffix=''):
         self.source_data.to_csv(save_dir+'/source_predictions_vis_'+suffix+'.csv',index=None,sep=',')
@@ -343,6 +344,34 @@ class Embeds_classify:
                     if print_flag==True:
                         print(self.embds_space_performance[training_key][classifier_key])
                     np.savetxt(save_file_name, self.embds_space_performance[training_key][classifier_key], '%f')
+
+    def combine_output_files(self,old_file,new_file,save_dir,save_name):
+
+        data_old = pd.read_csv(old_file)
+        data_new = pd.read_csv(new_file)
+        print(data_old.columns.tolist())
+        print(data_new.columns.tolist())
+        data_updated=data_new.copy()
+        for column in data_old.columns.tolist():
+            if column not in data_new.columns.tolist():
+                data_updated[column] =data_old[column]
+
+        print(data_updated.columns.tolist())
+        # THis is hard-coded...modify later TODO
+        pred_cols=[]
+        for column in data_updated.columns:
+            if ('pred' in column) and ('voting' not in column):
+                pred_cols.append(column)
+        print(pred_cols)
+        embed_space_disagree, embed_space_majority_lables = samples_to_label.get_disagreed_points(data_updated[pred_cols].as_matrix())
+
+        data_updated['voting_pred']=embed_space_majority_lables
+        data_updated['embed_space_disagree_samples']=embed_space_disagree
+        data_updated.to_csv(save_dir + '/'+save_name+'_conbined.csv', index=None, sep=',')
+
+
+
+
 
 
 if __name__=='__main__':

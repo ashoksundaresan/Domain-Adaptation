@@ -12,7 +12,7 @@ from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 from include.cnf_matrix_pct import compute_cnf_matrix
-
+from sklearn.ensemble import ExtraTreesClassifier
 
 
 class Low_dim_classifier:
@@ -54,6 +54,10 @@ class Low_dim_classifier:
             if method == 'RandomForestClassifier' or method == 'all':
                 classifiers['RandomForestClassifier']=RandomForestClassifier(max_depth=5, n_estimators=100, max_features=1)
                 self.available_classifiers.append('RandomForestClassifier')
+
+            if method == 'ExtraTreesClassifier' or method == 'all':
+                classifiers['ExtraTreesClassifier']=ExtraTreesClassifier(n_estimators=250,random_state=0)
+                self.available_classifiers.append('ExtraTreesClassifier')
 
             if method == 'MLPClassifier' or method == 'all':
                 classifiers['MLPClassifier']=MLPClassifier(alpha=1)
