@@ -1,6 +1,7 @@
 from flask import Flask,request
 import os
 from include.infer_from_trainer import Load_trainer
+import pandas as pd
 
 # app = Flask(__name__)
 # @app.route('/embed_space_learn',methods=['POST','GET'])
@@ -15,8 +16,10 @@ def compute_embed_space():
     #     run_source=''
 
     data_dir = ''
-    trainer_path =''
-    run_source=''
+    trainer_path = ''
+    run_source = 'False'
+    training_data_file = '/home/ubuntu/domain_adaptation_demo_data/target_data_dir/target_data.csv'
+
     if data_dir == '':
         data_dir = '../domain_adaptation_demo_data'
         print('Using data in {0}'.format(data_dir))
@@ -28,7 +31,6 @@ def compute_embed_space():
     if run_source=='':
         run_source='True'
 
-
     trainer_path=data_dir+'/model_files/demo_domain_adapt/_mix_trgt_99_source_99'
     params = {'crop_size': 227, 'perf_layers': ['loss'], 'prediction_key': 'prob'}
     trainer = Load_trainer(trainer_path)
@@ -37,11 +39,10 @@ def compute_embed_space():
         source_data_file=trainer.dir_strc.dbs+'/source_test_txt_data'
         source_pred, source_cnf_matrix_array = trainer.get_performance(source_data_file, params['crop_size'],
                                                                            params['prediction_key'], labels_col=[],
-                                                                           layer='conv10', save_data_suffix='_source')
-
-
-
-
+                                                                           layer='conv10', save_data_suffix='_updated')
+    target_pred, target_cnf_matrix_array = trainer.get_performance(training_data_file, params['crop_size'],
+                                                                   params['prediction_key'], labels_col=[],
+                                                                   layer='conv10', save_data_suffix='_updated')
 
 
 
