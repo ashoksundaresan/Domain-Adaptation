@@ -46,7 +46,7 @@ def retain_data():
     serving_path = data_dir
 
     da = domain_adaptation.Domain_adaptation(source_files, source_labels, target_files, \
-                                             base_model_files, params, name_prefix, serving_path,target_labels)
+                                             base_model_files, params, name_prefix, serving_path,target_labels=target_labels)
 
     da.setup_training_models()
     da.split_test_train()
