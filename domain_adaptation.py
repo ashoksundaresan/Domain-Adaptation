@@ -223,8 +223,8 @@ if __name__=='__main__':
 
 
     # source_files, source_labels, target_files, target_labels, base_model_files, params, name_prefix
-    domain_adapt=Domain_adaptation(source_files,source_labels,target_files,target_labels, \
-                                   base_model_files,params,name_prefix,serving_path)
+    domain_adapt=Domain_adaptation(source_files,source_labels,target_files, \
+                                   base_model_files,params,name_prefix,serving_path,target_labels=target_labels)
     domain_adapt.setup_training_models()
     domain_adapt.split_test_train()
     domain_adapt.generate_training_val_data()
