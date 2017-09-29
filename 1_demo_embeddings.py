@@ -27,4 +27,4 @@ target_all_pred, target_all_cnf_matrix_array = trainer.get_performance(target_da
                                                                              params['prediction_key'], labels_col=[],
                                                                              layer='conv10',save_data_suffix='')
 
-print('Features saved to {0}'.format(trainer.dir_strc.analysis_results_files ))
+print('Features saved to {0}'.format(trainer.dir_strc.analysis_results_files))

@@ -4,16 +4,16 @@ import pandas as pd
 from flask import Flask,request
 import os
 
-# app = Flask(__name__)
-# @app.route('/embed_space_learn',methods=['POST','GET'])
+app = Flask(__name__)
+@app.route('/embed_space_learn',methods=['POST','GET'])
 def retain_data():
-    # if request.method == 'POST':
-    #     data_dir = request.form['data_dir']
-    #     compute_tsne_flag = request.form['compute_tsne_flag']
-    # else:
-    #     data_dir = ''
-    #     compute_tsne_flag = ''
-    data_dir=''
+    if request.method == 'POST':
+        data_dir = request.form['data_dir']
+        compute_tsne_flag = request.form['compute_tsne_flag']
+    else:
+        data_dir = ''
+        compute_tsne_flag = ''
+    # data_dir=''
     if data_dir == '':
         data_dir = '../domain_adaptation_demo_data'
         print('Using data in {0}'.format(data_dir))
