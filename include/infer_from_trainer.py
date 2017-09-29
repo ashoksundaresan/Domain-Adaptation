@@ -104,8 +104,9 @@ class Load_trainer:
         infer = Inference(deploy_inputs, params=infer_params)
         data = pd.read_csv(data_file, header=None, sep=' ')
 
-
-        print(data.columns)
+        print('---------------------------------')
+        print(data)
+        print('---------------------------------')
         pred_class = [ ]
         pred_prob = [ ]
         representations=[]
