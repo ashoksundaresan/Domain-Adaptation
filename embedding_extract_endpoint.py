@@ -43,11 +43,12 @@ def compute_embed_space():
                                                                            layer='conv10', save_data_suffix='_updated')
         os.system('mkdir data_dir/embeddings_out/updated')
         os.system('cp '+trainer.dir_strc.analysis_results_files+'/source_test_txt_data_predictions_updated'+' '+data_dir+'/embeddings_out/updated/source_data.csv')
-        os.system('cp ' + trainer.dir_strc.analysis_results_files + '/source_test_txt_data_embeds_source.npy'' '+data_dir+'/embeddings_out/updated/source_data_embeds.npy')
+        os.system('cp ' + trainer.dir_strc.analysis_results_files + '/source_test_txt_data_embeds_updated.npy'' '+data_dir+'/embeddings_out/updated/source_data_embeds.npy')
 
     target_pred, target_cnf_matrix_array = trainer.get_performance(training_data_file, params['crop_size'],
                                                                    params['prediction_key'], labels_col=[],
                                                                    layer='conv10', save_data_suffix='_updated')
+
     os.system('cp ' + trainer.dir_strc.analysis_results_files + '/target_data.csv_predictions_updated' +' '+data_dir+'/embeddings_out/updated/target_data.csv')
     os.system('cp ' + trainer.dir_strc.analysis_results_files + '/target_test_txt_data_embeds_source.npy' +' '+data_dir+'/embeddings_out/updated/target_data_embeds.npy')
 

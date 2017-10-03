@@ -131,6 +131,7 @@ class Load_trainer:
             targets=data[labels_col]
             cnf_matrix, cnf_matrix_pct = compute_cnf_matrix(targets, data['pred_class'])
             cnf_matrix_array = np.vstack([cnf_matrix, cnf_matrix_pct])
+            data['true_label'] = data[labels_col]
         else:
             cnf_matrix_array=None
             data['true_label']=''
