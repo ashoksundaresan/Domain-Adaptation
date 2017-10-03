@@ -1,24 +1,25 @@
 import domain_adaptation
 from include.infer_from_trainer import Load_trainer
 import pandas as pd
-from flask import Flask,request
+from flask import Flask,request,jsonify
 import os
 
 app = Flask(__name__)
 @app.route('/embed_space_learn',methods=['POST','GET'])
 def retain_data():
     if request.method == 'POST':
-        data_dir = request.form['data_dir']
-        compute_tsne_flag = request.form['compute_tsne_flag']
+        serving_dir = request.form['serving_dir']
+        data_file = request.form['data_file']
     else:
         data_dir = ''
         compute_tsne_flag = ''
     # data_dir=''
-    if data_dir == '':
-        data_dir = '../domain_adaptation_demo_data'
+    if serving_dir == '':
+        serving_dir = '../domain_adaptation_demo_data'
         print('Using data in {0}'.format(data_dir))
 
-    data_file=data_dir+'/relabled_out/visualization_data_relabled.csv'
+
+    #data_file=data_dir+'/relabled_out/visualization_data_relabled.csv'
 
     data_df=pd.read_csv(data_file)
 
@@ -42,8 +43,8 @@ def retain_data():
               'perf_layers': ['loss'],
               'prediction_key': 'prob'}
 
-    name_prefix = 'demo_domain_adapt/'
-    serving_path = data_dir
+    name_prefix = 'updated'
+    serving_path = serving_dir
 
     da = domain_adaptation.Domain_adaptation(source_files, source_labels, target_files, \
                                              base_model_files, params, name_prefix, serving_path,target_labels=target_labels)
@@ -53,7 +54,8 @@ def retain_data():
     da.generate_training_val_data()
     da.generate_proto_files()
     da.train_transfer_learning()
-    return "OK"
+    output_dict={'updated_traininer':serving_path+'/model_files/'+name_prefix+'_mix_trgt_'+str(99)+'_source_'+str(99)}
+    return jsonify(output_dict)
 
 if __name__=="__main__":
     retain_data()

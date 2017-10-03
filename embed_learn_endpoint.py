@@ -1,4 +1,4 @@
-from flask import Flask,request
+from flask import Flask,request,jsonify
 import os
 import embd_space_learn
 app = Flask(__name__)
@@ -64,7 +64,10 @@ def compute_embed_space():
     ### Display
     print('Computing low-confidence samples to request labels')
     em_learn.get_samples_tolabel(dl_prob_label='dl_prob')
-    return 'OK'
+
+    output_dict={'output_dir':data_dir + '/embeddings_out'}
+
+    return jsonify(output_dict)
 
 ### A separate call for tsne--because it is slower
 @app.route('/embed_space_learn_tsne',methods=['POST','GET'])
