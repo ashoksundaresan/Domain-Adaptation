@@ -41,7 +41,7 @@ def compute_embed_space():
     trainer = Load_trainer(trainer_path)
 
     if run_source=='True':
-        source_data_file='/home/ubuntu/domain_adaptation_demo_data/source_data_dir/source_data.csv'
+        source_data_file='../domain_adaptation_demo_data/source_data_dir/source_data.csv'
         source_pred, source_cnf_matrix_array = trainer.get_performance(source_data_file, params['crop_size'],
                                                                            params['prediction_key'], labels_col=[],
                                                                            layer='conv10', save_data_suffix='')
@@ -56,7 +56,7 @@ def compute_embed_space():
     os.system('cp ' + trainer.dir_strc.analysis_results_files + '/target_data.csv_predictions' +' '+data_dir+'/embeddings_out/updated/target_data.csv')
     os.system('cp ' + trainer.dir_strc.analysis_results_files + '/target_test_txt_data_embeds.npy' +' '+data_dir+'/embeddings_out/updated/target_data_embeds.npy')
     return_obj={'source_predictions':data_dir+'/embeddings_out/updated/source_data.csv',\
-                'tource_predictions':data_dir+'/embeddings_out/updated/target_data.csv',\
+                'target_predictions':data_dir+'/embeddings_out/updated/target_data.csv',\
                 'source_embeddings':data_dir+'/embeddings_out/updated/source_data_embeds.npy',\
                 'target_embeddings':data_dir+'/embeddings_out/updated/target_data_embeds.npy'}
 
